@@ -10,7 +10,10 @@ class MoleculaSerializer(serializers.ModelSerializer):
 class PerguntaSerializer(serializers.ModelSerializer):
     molecula = MoleculaSerializer(read_only=True)
     molecula_id = serializers.PrimaryKeyRelatedField(
-        queryset=Molecula.objects.all(), source='molecula', write_only=True
+        queryset=Molecula.objects.all(),
+        source="molecula",
+        allow_null=True,
+        required=False
     )
 
     class Meta:
