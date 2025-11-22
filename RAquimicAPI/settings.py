@@ -142,7 +142,7 @@ AUTH_USER_MODEL = "user.User"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://seu-front-no-futuro.vercel.app",
+    "https://raquimic-frontend.vercel.app/",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
