@@ -3,12 +3,11 @@ from rest_framework import viewsets ,permissions, status
 from .models import Molecula, Pergunta, Sala, JogadorSala, Quiz
 from .serializers import (
     MoleculaSerializer, PerguntaSerializer, SalaSerializer,
-    JogadorSalaSerializer, QuizSerializer
+    JogadorSalaSerializer, QuizSerializer, UnityPerguntaSerializer
 )
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from user.models import User
-from rest_framework.decorators import action
 from firebase_admin import db
 
 # --- Permissão: apenas admin pode editar moléculas e perguntas ---
@@ -95,14 +94,34 @@ class JogadorSalaViewSet(viewsets.ModelViewSet):
 class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
-    permission_classes = [permissions.AllowAny]  # quiz pode ser criado anonimamente
 
-    def perform_create(self, serializer):
-        jogador = None
-        if self.request.user.is_authenticated:
-            jogador = self.request.user
-        else:
-            nome = self.request.data.get("nome", f"Guest_{random.randint(1000,9999)}")
-            jogador, _ = User.objects.get_or_create(username=nome, defaults={"is_guest": True})
+    @action(detail=True, methods=['get'])
+    def unity(self, request, pk=None):
+        quiz = self.get_object()
+        perguntas = []
 
-        serializer.save(jogador=jogador)
+        for p in quiz.perguntas.all():
+            alternativas = [
+                p.alternativa_a,
+                p.alternativa_b,
+                p.alternativa_c,
+                p.alternativa_d,
+            ]
+
+            indice_correto = {
+                'a': 0, 'b': 1, 'c': 2, 'd': 3
+            }.get(p.resposta_correta.lower(), 0)
+
+            perguntas.append({
+                "molecula": p.molecula.nome if p.molecula else "",
+                "enunciado": p.enunciado,
+                "alternativas": alternativas,
+                "respostaCorreta": indice_correto,
+                "dica": p.dica,
+                "dificuldade": p.get_dificuldade_display(),
+                "referencia": p.referencia,
+                "tempo": 20,
+            })
+
+        serializer = UnityPerguntaSerializer(perguntas, many=True)
+        return Response(serializer.data)

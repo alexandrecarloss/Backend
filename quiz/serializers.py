@@ -39,3 +39,13 @@ class QuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quiz
         fields = '__all__'
+
+class UnityPerguntaSerializer(serializers.Serializer):
+    molecula = serializers.CharField()
+    enunciado = serializers.CharField()
+    alternativas = serializers.ListField(child=serializers.CharField())
+    respostaCorreta = serializers.IntegerField()
+    dica = serializers.CharField()
+    dificuldade = serializers.CharField()
+    referencia = serializers.CharField()
+    tempo = serializers.IntegerField()
