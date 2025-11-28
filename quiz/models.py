@@ -75,6 +75,7 @@ class Pergunta(models.Model):
 
 
 class Quiz(models.Model):
+    nome = models.CharField(max_length=200, null=True, blank=True)
     jogador = models.ForeignKey(User, on_delete=models.CASCADE, related_name="quizzes", null=True, blank=True )
     perguntas = models.ManyToManyField("Pergunta", related_name="quizzes")
     pontuacao = models.IntegerField(default=0)

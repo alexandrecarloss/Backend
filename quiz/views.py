@@ -97,13 +97,15 @@ class QuizViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path="criar-personalizado")
     def criar_personalizado(self, request):
+        nome = request.data.get("nome")
         perguntas_ids = request.data.get("perguntas", [])
 
         if not perguntas_ids:
             return Response({"erro": "Nenhuma pergunta selecionada"}, status=400)
 
         quiz = Quiz.objects.create(
-            jogador=None,      # o aluno jogará depois
+            nome=nome,
+            jogador=None,
             sala=None,
             pontuacao=0
         )
@@ -112,6 +114,7 @@ class QuizViewSet(viewsets.ModelViewSet):
         quiz.save()
 
         return Response(QuizSerializer(quiz).data, status=201)
+
 
 
     @action(detail=True, methods=['get'])
