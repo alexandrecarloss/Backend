@@ -17,7 +17,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".onrender.com",
+    ".vercel.app",
+]
+
 
 # Application definition
 
@@ -142,7 +148,6 @@ AUTH_USER_MODEL = "user.User"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://raquimic-frontend.vercel.app",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
@@ -151,6 +156,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
     "https://*.onrender.com",
     "http://localhost:5173",
 ]
