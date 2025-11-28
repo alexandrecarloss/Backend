@@ -75,7 +75,7 @@ class Pergunta(models.Model):
 
 
 class Quiz(models.Model):
-    jogador = models.ForeignKey(User, on_delete=models.CASCADE, related_name="quizzes")
+    jogador = models.ForeignKey(User, on_delete=models.CASCADE, related_name="quizzes", null=True, blank=True )
     perguntas = models.ManyToManyField("Pergunta", related_name="quizzes")
     pontuacao = models.IntegerField(default=0)
     dataHora = models.DateTimeField(default=timezone.now)

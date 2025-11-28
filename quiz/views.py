@@ -95,6 +95,25 @@ class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
+    @action(detail=False, methods=['post'], url_path="criar-personalizado")
+    def criar_personalizado(self, request):
+        perguntas_ids = request.data.get("perguntas", [])
+
+        if not perguntas_ids:
+            return Response({"erro": "Nenhuma pergunta selecionada"}, status=400)
+
+        quiz = Quiz.objects.create(
+            jogador=None,      # o aluno jogará depois
+            sala=None,
+            pontuacao=0
+        )
+
+        quiz.perguntas.set(perguntas_ids)
+        quiz.save()
+
+        return Response(QuizSerializer(quiz).data, status=201)
+
+
     @action(detail=True, methods=['get'])
     def unity(self, request, pk=None):
         quiz = self.get_object()

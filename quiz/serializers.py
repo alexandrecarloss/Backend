@@ -33,12 +33,15 @@ class JogadorSalaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuizSerializer(serializers.ModelSerializer):
-    perguntas = PerguntaSerializer(many=True, read_only=True)
-    jogador = serializers.StringRelatedField(read_only=True)
-
     class Meta:
         model = Quiz
-        fields = '__all__'
+        fields = "__all__"
+        extra_kwargs = {
+            "jogador": {"required": False, "allow_null": True},
+            "pontuacao": {"required": False},
+            "sala": {"required": False, "allow_null": True},
+        }
+
 
 class UnityPerguntaSerializer(serializers.Serializer):
     molecula = serializers.CharField()
