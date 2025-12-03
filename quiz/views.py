@@ -140,10 +140,9 @@ class QuizViewSet(viewsets.ModelViewSet):
                 "alternativas": alternativas,
                 "respostaCorreta": indice_correto,
                 "dica": p.dica,
-                "dificuldade": p.get_dificuldade_display(),
+                "dificuldade": p.dificuldade, 
                 "referencia": p.referencia,
                 "tempo": 20,
             })
 
-        serializer = UnityPerguntaSerializer(perguntas, many=True)
-        return Response(serializer.data)
+        return Response(perguntas)
