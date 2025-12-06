@@ -14,6 +14,6 @@ router.register('quizzes', QuizViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path("moleculas/count/", moleculas_count),
-    path("perguntas/count/", perguntas_count),
+    path("perguntas-total/", perguntas_count),
+    path("moleculas-total/", moleculas_count),
 ]
