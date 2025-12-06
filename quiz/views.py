@@ -25,7 +25,7 @@ class MoleculaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
 
 # Consulta otimizada
-class PerguntaViewSet(ModelViewSet):
+class PerguntaViewSet(viewsets.ModelViewSet):
     queryset = Pergunta.objects.select_related("molecula").order_by("molecula__nome", "enunciado")
     serializer_class = PerguntaSerializer
     filter_backends = [filters.SearchFilter]
