@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from user.models import User
 from firebase_admin import db
+from rest_framework import filters
 
 # --- Permissão: apenas admin pode editar moléculas e perguntas ---
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -24,9 +25,11 @@ class MoleculaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
 
 # Consulta otimizada
-class PerguntaViewSet(viewsets.ModelViewSet):
+class PerguntaViewSet(ModelViewSet):
     queryset = Pergunta.objects.select_related("molecula").order_by("molecula__nome", "enunciado")
     serializer_class = PerguntaSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['enunciado', 'molecula__nome']
     permission_classes = [IsAdminOrReadOnly]
 
 @api_view(['GET'])
