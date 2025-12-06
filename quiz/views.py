@@ -23,12 +23,11 @@ class MoleculaViewSet(viewsets.ModelViewSet):
     serializer_class = MoleculaSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-
+# Consulta otimizada
 class PerguntaViewSet(viewsets.ModelViewSet):
-    queryset = Pergunta.objects.all()
+    queryset = Pergunta.objects.select_related("molecula").order_by("molecula__nome", "enunciado")
     serializer_class = PerguntaSerializer
     permission_classes = [IsAdminOrReadOnly]
-
 
 @api_view(['GET'])
 def perguntas_count(request):
