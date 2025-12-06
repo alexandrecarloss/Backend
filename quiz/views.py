@@ -30,6 +30,17 @@ class PerguntaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
 
 
+@api_view(['GET'])
+def perguntas_count(request):
+    total = Pergunta.objects.count()
+    return Response({"count": total})
+
+@api_view(['GET'])
+def moleculas_count(request):
+    total = Molecula.objects.count()
+    return Response({"count": total})
+
+
 class SalaViewSet(viewsets.ModelViewSet):
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer

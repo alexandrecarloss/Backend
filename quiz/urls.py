@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import (
     MoleculaViewSet, PerguntaViewSet, SalaViewSet,
-    JogadorSalaViewSet, QuizViewSet
+    JogadorSalaViewSet, QuizViewSet, moleculas_count, perguntas_count
 )
 
 router = DefaultRouter()
@@ -14,4 +14,6 @@ router.register('quizzes', QuizViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path("moleculas/count/", moleculas_count),
+    path("perguntas/count/", perguntas_count),
 ]
