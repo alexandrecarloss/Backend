@@ -33,6 +33,11 @@ class JogadorSalaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuizSerializer(serializers.ModelSerializer):
+    perguntas = serializers.PrimaryKeyRelatedField(
+        queryset=Pergunta.objects.all(),
+        many=True
+    )
+
     class Meta:
         model = Quiz
         fields = "__all__"
@@ -41,6 +46,7 @@ class QuizSerializer(serializers.ModelSerializer):
             "pontuacao": {"required": False},
             "sala": {"required": False, "allow_null": True},
         }
+
 
 
 class UnityPerguntaSerializer(serializers.Serializer):
