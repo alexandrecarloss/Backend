@@ -165,6 +165,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://backend-kyrh.onrender.com",
     "https://raquimic-frontend.vercel.app",
+    "https://ubiquitous-croissant-599ceb.netlify.app"
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
