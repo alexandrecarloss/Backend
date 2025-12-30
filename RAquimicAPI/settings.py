@@ -22,8 +22,8 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     ".onrender.com",
     ".vercel.app",
+    ".netlify.app",
 ]
-
 
 # Application definition
 
@@ -96,15 +96,6 @@ DATABASES = {
 }
 
 
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=os.environ.get("DATABASE_URL"),
-#         conn_max_age=600,
-#         ssl_require=True
-#     )
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -170,11 +161,14 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https:\/\/.*\.vercel\.app$",
+    r"^https:\/\/.*\.netlify\.app$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
     "https://*.onrender.com",
+    "https://*.netlify.app",
     "http://localhost:5173",
 ]
+
